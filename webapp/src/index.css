@@ -1,0 +1,206 @@
+:root {
+  --lightgray: #f0f0f3;
+  --black: #262626;
+  --blue: #14a6f4;
+  --gray: #969696;
+  --grey: #969696;
+  --lightgrey: #f0f0f3;
+  --blue-darker: #0c7db9;
+  --error: #ff7f50;
+  --quartz: #ff4d6a;
+  --darkmode: #0a1635;
+  --darkmode-deep: #040e26;
+  --white: #f6f6f8;
+  --bgtext: #f4f3f3;
+  --blueShadow: rgba(2, 173, 231, 0.4);
+  --tags: #6f7889;
+  --darkgray: #333;
+  --blue-pale: #88b6d0;
+}
+
+@import url('https://fonts.googleapis.com/css2?family=Raleway:wght@300;400;900&display=swap');
+
+body {
+  margin: 0;
+  font-family: 'Raleway', 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background-color: var(--darkmode-deep);
+  background: linear-gradient(179deg, rgb(4 14 38) 0%, rgb(15 27 56) 45%, rgb(14 26 56) 100%);
+  color: var(--bgtext);
+  overflow: hidden;
+}
+
+.text-pink-unique {
+  color: var(--quartz);
+}
+
+.text-blue-unique {
+  color: var(--blue);
+}
+.bg-blue-unique {
+  background-color: var(--blue);
+}
+button.bg-blue-unique:hover {
+  background-color: var(--blue-darker);
+  transition: all 0.4s ease;
+}
+
+.bg-darkmode {
+  background-color: var(--darkmode);
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+}
+
+.item-selected {
+  background: rgba(255,255,255,.15);
+  border-radius: 5px;
+}
+
+.change-node-text {
+  position: absolute;
+  font-size: 1.25em;
+  color: #e7e7e7;
+  z-index: 10;
+  top: 10px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  padding: 0 15px;
+}
+
+
+.loader {
+  display: block;
+  animation: rotate 2s infinite;
+  height: 50px;
+  width: 50px;
+}
+.loader:before,
+.loader:after {
+  content: "";
+  display: block;
+  height: 20px;
+  width: 20px;
+}
+.loader:before {
+  animation: box1 1s infinite;
+  background-color: #fff;
+  box-shadow: 30px 0 0 var(--blue);
+  margin-bottom: 10px;
+}
+.loader:after {
+  animation: box2 1s infinite;
+  background-color: var(--blue);
+  box-shadow: 30px 0 0 #fff;
+}
+
+@keyframes rotate {
+  0% { transform: rotate(0deg) scale(0.8) }
+  50% { transform: rotate(360deg) scale(1.2) }
+  100% { transform: rotate(720deg) scale(0.8) }
+}
+
+@keyframes box1 {
+  0% {
+    box-shadow: 30px 0 0 var(--blue);
+  }
+  50% {
+    box-shadow: 0 0 0 var(--blue);
+    margin-bottom: 0;
+    transform: translate(15px, 15px);
+  }
+  100% {
+    box-shadow: 30px 0 0 var(--blue);
+    margin-bottom: 10px;
+  }
+}
+
+@keyframes box2 {
+  0% {
+    box-shadow: 30px 0 0 #fff;
+  }
+  50% {
+    box-shadow: 0 0 0 #fff;
+    margin-top: -20px;
+    transform: translate(15px, 15px);
+  }
+  100% {
+    box-shadow: 30px 0 0 #fff;
+    margin-top: 0;
+  }
+}
+
+
+.modal-window {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: fixed;
+  background-color: rgba(0,0,0,.65);
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 999;
+  visibility: hidden;
+  opacity: 0;
+  pointer-events: none;
+  transition: all 0.3s;
+}
+.modal-window.open {
+  visibility: visible;
+  opacity: 1;
+  pointer-events: auto;
+}
+.modal-window > div {
+  position: relative;
+}
+.modal-close {
+  color: #aaa;
+  position: absolute;
+  right: 5px;
+  text-align: center;
+  top: 5px;
+  text-decoration: none;
+}
+.modal-close:hover {
+  color: black;
+}
+.modal-close svg {
+	width: 24px;
+	height: 24px;
+}
+.modal-iframe {
+  width: 960px;
+  height: 560px;
+}
+.modal-backdrop {
+	position: fixed !important;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	z-index: 0;
+  background-color: transparent;
+}
+
+.modalpic {
+  width: 128px;
+  min-width: 128px;
+}
+.codeblock {
+  overflow-wrap: break-word;
+  white-space: pre-wrap;
+  background: rgba(0,0,0,0.25);
+  padding: 10px 8px;
+  border-radius: 5px;
+  margin-top: 5px;
+}
