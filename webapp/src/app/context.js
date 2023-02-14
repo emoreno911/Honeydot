@@ -1,22 +1,61 @@
-import React, { createContext, useState, useEffect } from 'react';
+import React, { createContext, useState, useEffect, useContext } from 'react';
+import { Polkadot } from "@unique-nft/utils/extension";
+import {Sdk} from "@unique-nft/sdk";
+import {KeyringProvider} from "@unique-nft/accounts/keyring";
 import {
+	baseNetworkURL,
 	getAccountBalance,
 } from './utils';
 
-export const DataContext = createContext();
+const DataContext = createContext();
+export const useDatacontext = () => useContext(DataContext);
 
 const DataContextProvider = (props) => { 
-	const collectionId = 1220;
-	//const [currentParent, setCurrentParent] = useState(null);
-	//const [currentChild, setCurrentChild] = useState(null);
+	const [sdk, setSdk] = useState(null);
+	const [balance, setBalance] = useState({});
+	const [currentAccount, setCurrentAccount] = useState({});
+	const [currentCollection, setCurrentCollection] = useState([]);
 
 	useEffect(() => {
-		//getBalance();
+		initAccountWithWallet()
 	}, [])
 
-	const getBalance = async () => {
-		const {address, balance} = await getAccountBalance("5F9GP5q3X8CPaHEHbffYURdDz6T1q6uEs1EHiysg9ek8DGWV");
-		console.log(`Balance for ${address} is ${balance}`)
+	const initAccountWithWallet = async () => {
+		const result = await Polkadot.enableAndLoadAllWallets();
+		const account = result.accounts[0];
+		const sdk = new Sdk({
+			baseUrl: baseNetworkURL, 
+			signer: account.uniqueSdkSigner
+		})
+		
+		const balance = await sdk.balance.get({address: account.address});
+		console.log(balance);
+
+		setBalance(balance.availableBalance);
+		setCurrentAccount(account);
+		setSdk(sdk);
+	}
+
+	const initAccountWithSeed = async () => {
+		const account = await KeyringProvider.fromMnemonic('affair spoon other impact target solve extra range cute myself float panda')
+
+		const sdk = new Sdk({
+			baseUrl: baseNetworkURL,
+			signer: account,
+		})
+
+		const balance = await sdk.balance.get({address: account.getAddress()});
+		console.log(balance);
+	}
+
+	const getCollection = async (id = 376) => {
+		// const collection = await sdk.collections.tokens({collectionId: id});
+		// setCurrentCollection(collection);
+		// console.log(collection);
+
+		const tokens = await sdk.tokens.getAccountTokens({collectionId: id, address: currentAccount.address});
+		console.log(tokens);
+		
 	}
 
     const isMobile = () => {
@@ -24,11 +63,14 @@ const DataContextProvider = (props) => {
 	}
 
 	const data = {
-		collectionId,
+		currentCollection,
+		currentAccount,
+		balance
 	}
 
 	const fn = {
 		isMobile,
+		getCollection
 	}
 
 	return (

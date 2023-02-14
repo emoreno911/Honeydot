@@ -30,7 +30,7 @@ body {
   background-color: var(--darkmode-deep);
   background: linear-gradient(179deg, rgb(4 14 38) 0%, rgb(15 27 56) 45%, rgb(14 26 56) 100%);
   color: var(--bgtext);
-  overflow: hidden;
+  /* overflow: hidden; */
 }
 
 .text-pink-unique {

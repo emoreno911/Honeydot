@@ -1,20 +1,103 @@
 import { Link } from "react-router-dom";
-import ModalAbout from "../app/home/ModalAbout";
 
 function Home() {
     return (
-        <div className="h-screen max-w-screen-sm mx-auto flex flex-col items-center justify-center">
-            <div className="text-center">
-                <h1 className="text-6xl font-bold my-5">HONEY<span className="text-pink-unique">DOT</span></h1>
-                <h2 className="text-lg font-light my-10  uppercase">Boost your brand's engagement with unique loyalty programs</h2>
-
-                <Link to="/">
-                    <span className="block bg-darkmode uppercase font-bold text-lg py-3 mb-3">Demo</span>
-                </Link>
-                <ModalAbout />
-            </div>
+        <div className="site-content bg-white overflow-hidden">
+            <section className="pt-8 overflow-hidden sm:pt-12 lg:relative lg:py-10">
+                <div className="max-w-md px-4 mx-auto sm:max-w-3xl sm:px-6 lg:px-8 lg:max-w-7xl lg:grid lg:grid-cols-2 lg:gap-24">
+                    <div>
+                        <div className="flex items-center space-x-2">
+                            <img
+                                className="w-auto h-8"
+                                src="/landing/honeydot-logo.png"
+                                alt="Honeydot logo"
+                            />
+                            <p className="font-sans text-2xl font-bold text-gray-900">
+                                HONEY<span className="text-pink-500">DOT</span>
+                            </p>
+                        </div>
+                        <div className="mt-14">
+                            <div className="mt-6 sm:max-w-xl">
+                                <h1 className="text-3xl font-black tracking-tight text-gray-900 sm:text-6xl md:text-7xl">
+                                    Boost Your Brand's Engagement Using NFT
+                                    Loyalty Programs
+                                    <span className="text-primary">.</span>
+                                </h1>
+                                <h2 className="mt-6 text-lg text-gray-500 sm:text-xl">
+                                    Create your own customized loyalty campaigns
+                                    and reward your most loyal customers with
+                                    NFTs, discounts, free products, and more.
+                                </h2>
+                            </div>
+                            <div className="mt-10 space-y-4">
+                                <p className="sm:pl-2.5 text-base font-black tracking-tight text-gray-800 sm:text-lg">
+                                    Are you a Brand?
+                                </p>
+                                <Link to="/demo">
+                                    <button className="bg-pink-500 text-white uppercase font-bold text-lg w-full py-3 px-6 my-3 rounded-md">
+                                        START HERE
+                                    </button>
+                                </Link>
+                            </div>
+                            <div className="mt-6"></div>
+                        </div>
+                    </div>
+                </div>
+                <div className="sm:mx-auto sm:max-w-3xl sm:px-6">
+                    <div className="py-12 sm:relative sm:mt-12 sm:py-16 lg:absolute lg:inset-y-0 lg:right-0 lg:w-1/2">
+                        <div className="hidden sm:block">
+                            <div className="absolute inset-y-0 w-screen left-1/2 bg-gray-50 rounded-l-3xl lg:left-80 lg:right-0 lg:w-full"></div>
+                            <svg
+                                className="absolute -mr-3 top-8 right-1/2 lg:m-0 lg:left-0"
+                                width="404"
+                                height="392"
+                                fill="none"
+                                viewBox="0 0 404 392"
+                            >
+                                <defs>
+                                    <pattern
+                                        id="837c3e70-6c3a-44e6-8854-cc48c737b659"
+                                        x="0"
+                                        y="0"
+                                        width="20"
+                                        height="20"
+                                        patternUnits="userSpaceOnUse"
+                                    >
+                                        <rect
+                                            x="0"
+                                            y="0"
+                                            width="4"
+                                            height="4"
+                                            className="text-gray-200"
+                                            fill="currentColor"
+                                        ></rect>
+                                    </pattern>
+                                </defs>
+                                <rect
+                                    width="404"
+                                    height="392"
+                                    fill="url(#837c3e70-6c3a-44e6-8854-cc48c737b659)"
+                                ></rect>
+                            </svg>
+                        </div>
+                        <div className="relative pl-4 -mr:20 sm:-mr-32 md:-mr-16 sm:mx-auto sm:max-w-3xl sm:px-0 lg:h-full lg:max-w-none lg:flex lg:items-center xl:pl-12">
+                            <img
+                                className="w-full rounded-l-3xl lg:w-auto 2xl:h-full 2xl:max-w-none"
+                                src="/landing/customer-leads.svg"
+                                alt="Honeydot"
+                            />
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <footer className="overflow-hidden lg:relative pb-10">
+                <div className="text-sm text-center text-gray-700">
+                    <p>Made for the Polkadot Hackathon: Europe Edition</p>
+                    <p>Powered by Unique Network</p>
+                </div>
+            </footer>
         </div>
-    )
+    );
 }
 
 export default Home;

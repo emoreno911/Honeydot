@@ -6,6 +6,9 @@ export const appMetadata = {
     icon: "https://res.cloudinary.com/dy3hbcg2h/image/upload/v1652131690/dz-logo-black_c86gzb.png"
 }
 
+export const baseNetworkURL = "https://rest.unique.network/opal/v1"
+export const graphqlEndpoint = "https://api-opal.uniquescan.io/v1/graphql";
+
 export const backendBaseURL = (window.location.hostname === 'localhost') ? "http://localhost:5000" : process.env.REACT_APP_BACKEND_1;
 
 export const request = async ({url, fname, method = 'GET', data = null, _baseURL = null}) => {
