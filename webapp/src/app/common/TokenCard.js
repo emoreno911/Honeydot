@@ -1,6 +1,4 @@
-import { useEffect } from "react";
 import { Link } from "react-router-dom";
-import { useDatacontext } from "../context";
 
 const TokenCard = ({
     data: {
@@ -10,10 +8,9 @@ const TokenCard = ({
         token_name,
         image,
         children_count,
-		type
+        type,
     },
 }) => {
-    
     if (!collection_id) return <div className="hidden"></div>;
 
     const linkTo = `/visual/${token_id}`;
@@ -32,10 +29,19 @@ const TokenCard = ({
                     </div>
                     <div className="p-4">
                         <div className="flex items-center justify-between">
-                            <h2 className="my-1 text-black font-bold">{token_name}</h2>
-                            <span className="inline-block px-2 py-1 leading-none bg-yellow-200 text-yellow-800 rounded-full font-semibold uppercase tracking-wide text-xs">
-                                {type}
-                            </span>
+                            <h2 className="my-1 text-black font-bold">
+                                {token_name}
+                            </h2>
+
+                            {children_count > 0 ? (
+                                <span className="inline-block px-2 py-1 leading-none bg-pink-200 text-pink-800 rounded-full font-semibold uppercase tracking-wide text-xs mr-1">
+                                    BUNDLE
+                                </span>
+                            ) : (
+                                <span className="inline-block px-2 py-1 leading-none bg-yellow-200 text-yellow-800 rounded-full font-semibold uppercase tracking-wide text-xs">
+                                    {type}
+                                </span>
+                            )}
                         </div>
                         <span className="inline-block py-1 leading-none text-gray-500 uppercase tracking-wide text-xs">
                             {collection_name} ({collection_id})

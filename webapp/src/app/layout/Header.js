@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { useDatacontext } from "../context";
+import AccountSwitch from "./AccountSwitch";
 
 function NavLink({ to, children }) {
     return (
@@ -16,19 +16,15 @@ function NavbarMenu({ hidden = true }) {
 
     return (
         <>
-            <NavLink to="/">Products</NavLink>
-            <NavLink to="/">Marketplace</NavLink>
-            <NavLink to="/">Partners</NavLink>
-            <NavLink to="/">Pricing</NavLink>
+            <NavLink to="/dashboard">Campaigns</NavLink>
+            <NavLink to="/">Customers</NavLink>
+            <NavLink to="/">Account</NavLink>
+            <NavLink to="/playground">Playground</NavLink>
         </>
     );
 }
 
 function Header() {
-    const {
-        data: { balance },
-    } = useDatacontext();
-
     return (
         <div className="bg-white shadow">
             <div className="container mx-auto px-4">
@@ -47,15 +43,11 @@ function Header() {
                     </Link>
 
                     <div className="hidden sm:flex sm:items-center">
-                        <NavbarMenu />
+                        <NavbarMenu hidden={true} />
                     </div>
 
                     <div className="hidden sm:flex sm:items-center">
-                        <button className="text-gray-800 text-sm font-semibold border px-4 py-2 rounded-lg hover:text-pink-600 hover:border-pink-600">
-                            {balance
-                                ? `${balance.formatted} ${balance.unit}`
-                                : "Connect Wallet"}
-                        </button>
+                        <AccountSwitch />
                     </div>
 
                     <div className="sm:hidden cursor-pointer">
@@ -74,13 +66,9 @@ function Header() {
 
                 <div className="block sm:hidden bg-white border-t-2 py-2">
                     <div className="flex flex-col">
-                        <NavbarMenu />
-                        <div className="flex justify-between items-center border-t-2 pt-2">
-                            <button className="text-gray-800 text-sm font-semibold border px-4 py-1 rounded-lg hover:text-pink-600 hover:border-pink-600">
-                                {balance
-                                    ? `${balance.formatted} ${balance.unit}`
-                                    : "Connect Wallet"}
-                            </button>
+                        <NavbarMenu hidden={false} />
+                        <div className="flex justify-end items-center border-t-2 pt-2">
+                            <AccountSwitch />
                         </div>
                     </div>
                 </div>

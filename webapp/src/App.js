@@ -5,6 +5,7 @@ import DataContextProvider from './app/context';
 import Visual from './pages/visual';
 import Home from './pages/home';
 import Dashboard from './pages/dashboard';
+import Playground from './pages/playground';
 
 const client = new QueryClient();
 
@@ -17,6 +18,7 @@ function App() {
                   <Route path="/" exact render={props => <Home {...props} />} />
                   <Route path="/visual/:tokenId?" render={(props) => <Visual {...props} />} />
                   <Route path="/dashboard" render={(props) => <Dashboard {...props} />} />
+                  <Route path="/playground" render={(props) => <Playground {...props} />} />
               </Switch>
           </HashRouter>
       </DataContextProvider>

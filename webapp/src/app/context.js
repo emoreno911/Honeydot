@@ -13,31 +13,48 @@ export const useDatacontext = () => useContext(DataContext);
 const DataContextProvider = (props) => { 
 	const [sdk, setSdk] = useState(null);
 	const [balance, setBalance] = useState({});
-	const [currentAccount, setCurrentAccount] = useState({});
+	const [accounts, setAccounts] = useState([]);
+	const [currentAccountIndex, setCurrentAccountIndex] = useState(0);
 	const [currentCollection, setCurrentCollection] = useState([]);
 
 	useEffect(() => {
-		initAccountWithWallet()
+		setTimeout(() => {
+			initAccountWithWallet()
+		}, 500);
 	}, [])
 
 	const initAccountWithWallet = async () => {
 		const result = await Polkadot.enableAndLoadAllWallets();
-		const account = result.accounts[0];
+		const account = result.accounts[currentAccountIndex];
 		const sdk = new Sdk({
 			baseUrl: baseNetworkURL, 
 			signer: account.uniqueSdkSigner
 		})
 		
 		const balance = await sdk.balance.get({address: account.address});
-		console.log(balance);
-
 		setBalance(balance.availableBalance);
-		setCurrentAccount(account);
+		console.log(account)
+
+		setAccounts(result.accounts);
+		setSdk(sdk);
+	}
+
+	const switchWalletAccount = async (newIndex) => {
+		const account = accounts[newIndex];
+		const sdk = new Sdk({
+			baseUrl: baseNetworkURL, 
+			signer: account.uniqueSdkSigner
+		})
+		
+		const balance = await sdk.balance.get({address: account.address});
+		setBalance(balance.availableBalance);
+		setCurrentAccountIndex(newIndex);
 		setSdk(sdk);
 	}
 
 	const initAccountWithSeed = async () => {
-		const account = await KeyringProvider.fromMnemonic('affair spoon other impact target solve extra range cute myself float panda')
+		// devnet testing account 5E4KzvZz2ZSqE1g8ZfTA8xZGNhLgcNLxA8JysDzEVVMNdTRn
+		const account = await KeyringProvider.fromMnemonic('reflect boost slice noise solar practice disagree truth dutch miss lecture galaxy')
 
 		const sdk = new Sdk({
 			baseUrl: baseNetworkURL,
@@ -53,8 +70,8 @@ const DataContextProvider = (props) => {
 		// setCurrentCollection(collection);
 		// console.log(collection);
 
-		const tokens = await sdk.tokens.getAccountTokens({collectionId: id, address: currentAccount.address});
-		console.log(tokens);
+		// const tokens = await sdk.tokens.getAccountTokens({collectionId: id, address: currentAccount.address});
+		// console.log(tokens);
 		
 	}
 
@@ -64,13 +81,14 @@ const DataContextProvider = (props) => {
 
 	const data = {
 		currentCollection,
-		currentAccount,
+		currentAccountIndex,
+		accounts,
 		balance
 	}
 
 	const fn = {
 		isMobile,
-		getCollection
+		switchWalletAccount
 	}
 
 	return (

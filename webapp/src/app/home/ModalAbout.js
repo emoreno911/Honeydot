@@ -11,14 +11,14 @@ const ModalAbout = () => {
             handleShow={setIsShow}
 			activator={({ handleShow }) => (
                 <button 
-                    className="block bg-darkmode uppercase font-bold text-lg py-3 w-full"
+                    className="bg-blue-500 text-white uppercase font-bold text-sm py-3 px-6 my-3 rounded-md"
                     onClick={() => handleShow(true)}
                 >
                     About HONEYDOT
                 </button>
             )}
 		>
-			<div className="bg-darkmode pt-4 pb-8 px-8 rounded-md text-white">
+			<div className="bg-white text-gray-700 pt-4 pb-8 px-8 rounded-md">
 				<h4 className=" text-lg mb-6 font-semibold">About HONEYDOT</h4>
                 <div className="text-sm">
 <h5 className="font-semibold mt-5">What is HONEYDOT?</h5>

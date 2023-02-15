@@ -27,7 +27,39 @@ export const collectionsQuery = (owner) =>
       }
     `;
 
-export const tokensQuery = (owner, c_filter = [375, 376]) =>
+
+export const tokensQuery = (owner = null, c_filter = null) => {
+	const owner_filter = owner === null ? "" : `owner_normalized: {_eq: "${owner}"}`;
+	const collection_filter = c_filter === null ? "" : `collection_id: {_in: ${JSON.stringify(c_filter)}}`;
+	const has_comma = owner !== null && c_filter !== null ? "," : "";
+
+    return `query {
+        tokens(
+            where: {
+              ${owner_filter}${has_comma}
+              ${collection_filter}
+            },
+            order_by: {collection_id: desc, token_id: asc}
+            offset: 0
+            limit: 20
+          ) {
+            count
+            timestamp
+            data {
+              collection_id
+			  collection_name
+              token_id
+              token_name
+              image
+			  children_count
+			  type
+            }
+          }
+    }`;
+}
+
+
+export const tokensQueryOLD = (owner, c_filter = [376]) =>
     `query {
         tokens(
             where: {

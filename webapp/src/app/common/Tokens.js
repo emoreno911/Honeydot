@@ -5,29 +5,27 @@ import EmptyState from "./EmptyState";
 import Loader from "./Loader";
 import TokenCard from "./TokenCard";
 
-
-
-function Tokens({owner}) {
+function Tokens({ owner, collectionIds }) {
     const { data, isLoading, error } = useQuery("tokens", () => {
         return axios({
-          url: graphqlEndpoint,
-          method: "POST",
-          data: {
-            query: tokensQuery(owner)
-          }
-        }).then(response => response.data.data);
-      });
-    
-      if (isLoading) return <Loader />;
-    if (error) return <EmptyState style="mx-8" message={error.message} />;
+            url: graphqlEndpoint,
+            method: "POST",
+            data: {
+                query: tokensQuery(owner, collectionIds),
+            },
+        }).then((response) => response.data.data);
+    });
 
+    if (isLoading) return <Loader />;
+    if (error) return <EmptyState style="mx-8" message={error.message} />;
+	console.log(data)
     return (
         <div className="flex flex-wrap -mx-4">
-            {/* <EmptyState
+            <EmptyState
                 style="mx-8"
                 message="No Tokens available!"
-                condition={data.collections.count === 0}
-            /> */}
+                condition={data.tokens.count === 0}
+            />
             {data.tokens.data.map((obj) => (
                 <TokenCard key={obj.token_name} data={obj} />
             ))}
