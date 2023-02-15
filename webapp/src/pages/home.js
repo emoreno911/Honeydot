@@ -33,7 +33,7 @@ function Home() {
                                 <p className="sm:pl-2.5 text-base font-black tracking-tight text-gray-800 sm:text-lg">
                                     Are you a Brand?
                                 </p>
-                                <Link to="/demo">
+                                <Link to="/dashboard">
                                     <button className="bg-pink-500 text-white uppercase font-bold text-lg w-full py-3 px-6 my-3 rounded-md">
                                         START HERE
                                     </button>

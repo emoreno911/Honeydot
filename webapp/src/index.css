@@ -11,7 +11,7 @@
   --darkmode: #0a1635;
   --darkmode-deep: #040e26;
   --white: #f6f6f8;
-  --bgtext: #f4f3f3;
+  --bgtext: #444;
   --blueShadow: rgba(2, 173, 231, 0.4);
   --tags: #6f7889;
   --darkgray: #333;
@@ -21,14 +21,15 @@
 @import url('https://fonts.googleapis.com/css2?family=Raleway:wght@300;400;900&display=swap');
 
 body {
+  padding: 0;
   margin: 0;
   font-family: 'Raleway', 'Segoe UI', 'Roboto', 'Oxygen',
     'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background-color: var(--darkmode-deep);
-  background: linear-gradient(179deg, rgb(4 14 38) 0%, rgb(15 27 56) 45%, rgb(14 26 56) 100%);
+  background-color: #f3f4f6;
+  /* background: linear-gradient(179deg, rgb(4 14 38) 0%, rgb(15 27 56) 45%, rgb(14 26 56) 100%); */
   color: var(--bgtext);
   /* overflow: hidden; */
 }
@@ -77,66 +78,83 @@ code {
 }
 
 
-.loader {
-  display: block;
-  animation: rotate 2s infinite;
-  height: 50px;
-  width: 50px;
-}
-.loader:before,
-.loader:after {
-  content: "";
-  display: block;
-  height: 20px;
-  width: 20px;
-}
-.loader:before {
-  animation: box1 1s infinite;
-  background-color: #fff;
-  box-shadow: 30px 0 0 var(--blue);
-  margin-bottom: 10px;
-}
-.loader:after {
-  animation: box2 1s infinite;
-  background-color: var(--blue);
-  box-shadow: 30px 0 0 #fff;
+/* loader */
+.loader .container {
+  width: 200px;
+  height: 200px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  margin: auto;
+  filter: url('#goo');
+  animation: rotate-move 2s ease-in-out infinite;
 }
 
-@keyframes rotate {
-  0% { transform: rotate(0deg) scale(0.8) }
-  50% { transform: rotate(360deg) scale(1.2) }
-  100% { transform: rotate(720deg) scale(0.8) }
+.loader .dot { 
+  width: 70px;
+  height: 70px;
+  border-radius: 50%;
+  background-color: #000;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  margin: auto;
 }
 
-@keyframes box1 {
-  0% {
-    box-shadow: 30px 0 0 var(--blue);
-  }
-  50% {
-    box-shadow: 0 0 0 var(--blue);
-    margin-bottom: 0;
-    transform: translate(15px, 15px);
-  }
-  100% {
-    box-shadow: 30px 0 0 var(--blue);
-    margin-bottom: 10px;
-  }
+.loader .dot-3 {
+  background-color: #14a6f4;
+  animation: dot-3-move 2s ease infinite, index 6s ease infinite;
 }
 
-@keyframes box2 {
-  0% {
-    box-shadow: 30px 0 0 #fff;
-  }
-  50% {
-    box-shadow: 0 0 0 #fff;
-    margin-top: -20px;
-    transform: translate(15px, 15px);
-  }
-  100% {
-    box-shadow: 30px 0 0 #fff;
-    margin-top: 0;
-  }
+.loader .dot-2 {
+  background-color: #ff4d6a;
+  animation: dot-2-move 2s ease infinite, index 6s -4s ease infinite;
 }
+
+.loader .dot-1 {
+  background-color: #f0f0f3;
+  animation: dot-1-move 2s ease infinite, index 6s -2s ease infinite;
+}
+
+@keyframes dot-3-move {
+  20% {transform: scale(1)}
+  45% {transform: translateY(-18px) scale(.45)}
+  60% {transform: translateY(-90px) scale(.45)}
+  80% {transform: translateY(-90px) scale(.45)}
+  100% {transform: translateY(0px) scale(1)}
+}
+
+@keyframes dot-2-move {
+  20% {transform: scale(1)}
+  45% {transform: translate(-16px, 12px) scale(.45)}
+  60% {transform: translate(-80px, 60px) scale(.45)}
+  80% {transform: translate(-80px, 60px) scale(.45)}
+  100% {transform: translateY(0px) scale(1)}
+}
+
+@keyframes dot-1-move {
+  20% {transform: scale(1)}
+  45% {transform: translate(16px, 12px) scale(.45)}
+  60% {transform: translate(80px, 60px) scale(.45)}
+  80% {transform: translate(80px, 60px) scale(.45)}
+  100% {transform: translateY(0px) scale(1)}
+}
+
+@keyframes rotate-move {
+  55% {transform: translate(-50%, -50%) rotate(0deg)}
+  80% {transform: translate(-50%, -50%) rotate(360deg)}
+  100% {transform: translate(-50%, -50%) rotate(360deg)}
+}
+
+@keyframes index {
+  0%, 100% {z-index: 3}
+  33.3% {z-index: 2}
+  66.6% {z-index: 1}
+}
+
 
 
 .modal-window {

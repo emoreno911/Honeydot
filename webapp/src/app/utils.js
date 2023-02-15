@@ -1,4 +1,6 @@
 import axios from "axios";
+import { useQuery } from "react-query";
+import { collectionsQuery } from "./queries";
 
 export const appMetadata = {
 	name: "HONEYDOT",
@@ -7,8 +9,6 @@ export const appMetadata = {
 }
 
 export const baseNetworkURL = "https://rest.unique.network/opal/v1"
-export const graphqlEndpoint = "https://api-opal.uniquescan.io/v1/graphql";
-
 export const backendBaseURL = (window.location.hostname === 'localhost') ? "http://localhost:5000" : process.env.REACT_APP_BACKEND_1;
 
 export const request = async ({url, fname, method = 'GET', data = null, _baseURL = null}) => {
