@@ -1,7 +1,8 @@
+import { useState } from "react";
+import { useDatacontext } from "../app/context";
+import { ipfsBundleImage } from "../app/utils";
 import Tokens from "../app/common/Tokens";
 import Layout from "../app/layout";
-import { useDatacontext } from "../app/context";
-import { useState } from "react";
 import ModalAbout from "../app/home/ModalAbout";
 
 const Button = ({ children, onClick, color = 'pink' }) => (
@@ -15,21 +16,23 @@ const Button = ({ children, onClick, color = 'pink' }) => (
 
 function Playground() {
     const {
-        data: { balance },
-        fn: {},
+        data: { accounts, currentAccountIndex },
+        fn: { mintNewBundle, createCollection },
     } = useDatacontext();
 
-    const [collectionId, setCollectionId] = useState(486);
-    const [image, setImage] = useState(null);
+    const [collectionId, setCollectionId] = useState(500); //useState(486);
 
-    const handleImageChange = (image) => {
-        const reader = new FileReader();
-        reader.onload = function () {
-            setImage(reader.result);
-            
-        };
-        reader.readAsDataURL(image);
-    };
+    const mintNewLoyaltyBundle = () => {
+        console.log("minting...", accounts[currentAccountIndex]);
+        const encodedAttributes = {
+            'name': `Bundle ${Math.floor(Math.random() * (9999 - 1000) + 1000)}`
+          }
+        mintNewBundle({}, collectionId, ipfsBundleImage)
+    }
+
+    const mintNewRFT = () => {
+        //createCollection()
+    }
 
     return (
         <Layout>
@@ -50,9 +53,9 @@ function Playground() {
                     </li>
                 </ul>
                 <div className="pt-0">
-                    <Button>New Loyalty Bundle</Button>
+                    <Button onClick={mintNewLoyaltyBundle}>New Loyalty Bundle</Button>
                     {" "}
-                    <Button>New RFT</Button>
+                    <Button onClick={mintNewRFT}>New Collection</Button>
                     {" "}
                     <ModalAbout />
                 </div>

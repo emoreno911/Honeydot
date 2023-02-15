@@ -1,6 +1,7 @@
 import axios from "axios";
-import { useQuery } from "react-query";
-import { collectionsQuery } from "./queries";
+
+export const ipfsBundleImage = "QmY3XC4Twr62QcMz2StdQZsrrffYKuyimscfM6acA6yCwf";
+export const ipfsTicketImage = "Qmbw957mpvrK6ARp1Uq7taLYRCJaakuaw3p42bAZkPDv9Z";
 
 export const appMetadata = {
 	name: "HONEYDOT",
@@ -39,4 +40,20 @@ export async function getAccountBalance(address) {
     });
 
     return response;
+}
+
+// String base 64 to blob 
+export const dataURItoBlob = (dataURI) => {
+	var byteString = atob(dataURI.split(',')[1]);
+	var mimeString = dataURI.split(',')[0].split(':')[1].split(';')[0]
+	
+	var ab = new ArrayBuffer(byteString.length);
+	var ia = new Uint8Array(ab);
+	
+	for (var i = 0; i < byteString.length; i++) {
+	  ia[i] = byteString.charCodeAt(i);
+	}
+	var blob = new Blob([ab], {type: mimeString});
+	
+	return [blob, mimeString];
 }

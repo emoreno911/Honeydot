@@ -18,7 +18,7 @@ function Tokens({ owner, collectionIds }) {
 
     if (isLoading) return <Loader />;
     if (error) return <EmptyState style="mx-8" message={error.message} />;
-	console.log(data)
+
     return (
         <div className="flex flex-wrap -mx-4">
             <EmptyState

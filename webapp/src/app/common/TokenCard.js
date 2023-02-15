@@ -15,6 +15,8 @@ const TokenCard = ({
 
     const linkTo = `/visual/${token_id}`;
 
+    const fallback = "https://wallet.unique.network/static/media/empty-image.06dd29a7fc6c895e8369e8f0bb5780b2.svg"
+
     return (
         <div className="w-full sm:w-1/2 md:w-1/3 xl:w-1/4 p-4">
             <Link to={linkTo}>
@@ -23,7 +25,7 @@ const TokenCard = ({
                     <div className="relative pb-48 overflow-hidden">
                         <img
                             className="absolute inset-0 h-full w-full object-contain"
-                            src={image.fullUrl}
+                            src={image.fullUrl || fallback}
                             alt=""
                         />
                     </div>
