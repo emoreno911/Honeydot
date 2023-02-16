@@ -44,6 +44,7 @@ function Detail() {
         getNodes(bundle.nestingChildTokens, bundle.collectionId, bundle.tokenId);
         console.log(arr)
         setBundleInfo(arr)
+        // https://github.com/vasturiano/react-force-graph
     }
 
     if (Object.keys(tokenDetail).length === 0) {
