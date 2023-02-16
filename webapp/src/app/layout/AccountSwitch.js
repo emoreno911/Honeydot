@@ -4,7 +4,7 @@ import { useDatacontext } from "../context";
 function AccountSwitch() {
     const {
         data: { balance, accounts, currentAccountIndex },
-        fn: { switchWalletAccount },
+        fn: { switchWalletAccount, initAccountWithWallet },
     } = useDatacontext();
 
     const [isOpen, setIsOpen] = useState(false);
@@ -15,9 +15,16 @@ function AccountSwitch() {
         setIsOpen(false);
     };
 
+    const handleWalletConnect = () => {
+        initAccountWithWallet();
+    }
+
     if (accounts.length < 1) {
         return (
-            <button className="text-gray-800 text-sm font-semibold border px-4 py-2 rounded-lg hover:text-pink-600 hover:border-pink-600">
+            <button 
+                className="text-gray-800 text-sm font-semibold border px-4 py-2 rounded-lg hover:text-pink-600 hover:border-pink-600"
+                onClick={handleWalletConnect}
+            >
                 Connect Wallet
             </button>
         );

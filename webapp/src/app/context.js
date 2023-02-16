@@ -24,11 +24,15 @@ const DataContextProvider = (props) => {
 		}, 1500);
 	}, [])
 
-	const setSdkClient = (account) => {
-		return new Sdk({
+	const getSdkClient = () => {
+		const account = accounts[currentAccountIndex];
+		const address = account.address;
+		const sdk = new Sdk({
 			baseUrl: baseNetworkURL, 
 			signer: account.uniqueSdkSigner
-		});
+		})
+
+		return { sdk, address }
 	}
 
 	const initAccountWithWallet = async () => {
@@ -154,6 +158,131 @@ const DataContextProvider = (props) => {
 		  console.log(token) 
 	}
 
+	const createRftCollection = async () => {
+		const account = accounts[currentAccountIndex];
+		const address = account.address;
+		const sdk = new Sdk({
+			baseUrl: baseNetworkURL, 
+			signer: account.uniqueSdkSigner
+		})
+
+		const { parsed, error } = await sdk.refungible.createCollection.submitWaitResult({
+			address,
+			name: 'Test RFT collection',
+			description: 'My test RFT collection',
+			tokenPrefix: 'TSTR',
+		});
+	
+		if (error || !parsed) {
+			console.log('Error occurred while creating a collection. ', error);
+			process.exit();
+		}
+	
+		const { collectionId } = parsed;
+	
+		const c = await sdk.collections.get({ collectionId });
+		console.log('collection done', c);
+	}
+
+	const mintRefungibleToken = async () => {
+		const account = accounts[currentAccountIndex];
+		const address = account.address;
+		const sdk = new Sdk({
+			baseUrl: baseNetworkURL, 
+			signer: account.uniqueSdkSigner
+		})
+
+		const createArgs = {
+			collectionId: 523,
+			data: {
+				image: {},
+			},
+			amount: 20
+		};
+
+		const result = await sdk.refungible.createToken.submitWaitResult({
+			address,
+			...createArgs
+		});
+		if (!result || !result.parsed) {
+			console.log('Error occurred while creating a token');
+			process.exit();
+		}
+		const { collectionId, tokenId } = result.parsed;
+		console.log(collectionId, tokenId);
+
+		const token = await sdk.tokens.get({ collectionId, tokenId });
+		console.log(token) 
+	}
+
+	const getTokenInfo = async (collectionId = 500, tokenId = 1) => {
+		const account = accounts[currentAccountIndex];
+		const sdk = new Sdk({
+			baseUrl: baseNetworkURL, 
+			signer: account.uniqueSdkSigner
+		})
+
+		//const collection = await sdk.refungible.getCollection({ collectionId });
+		const result = await sdk.tokens.accountTokens({ collectionId, address: account.address });
+		console.log('collection', result)
+
+		const bundle = await sdk.tokens.getBundle({ collectionId, tokenId  });
+		console.log('collection', bundle)
+
+		const token = await sdk.tokens.get({ collectionId, tokenId });
+		console.log(token) 
+
+		// const { amount } = await sdk.refungible.getBalance({ collectionId, tokenId, address: account.address });
+		// console.log('Pieces you have: ', amount)
+	}
+
+	const getTokenDetailInfo = async (collectionId, tokenId) => {
+		const { sdk, address } = getSdkClient();
+
+		const tokenDetail = await sdk.tokens.get({ collectionId, tokenId });
+
+		const bundleInfo = await sdk.tokens.getBundle({ collectionId, tokenId  });
+		console.log('bundle', bundleInfo)
+
+		return { tokenDetail, bundleInfo }
+	}
+
+	const nestTokens = async ({ parentCollection, parentToken, childCollection, childToken }) => {
+		const account = accounts[currentAccountIndex];
+		const address = account.address;
+		const sdk = new Sdk({
+			baseUrl: baseNetworkURL, 
+			signer: account.uniqueSdkSigner
+		})
+
+		const args = {
+			address,
+			parent: {
+				collectionId: parentCollection,
+				tokenId: parentToken,
+			},
+			nested: {
+				collectionId: childCollection,
+				tokenId: childToken,
+			},
+			value: 10
+		};
+
+		console.log('nesting...')
+		const result = await sdk.tokens.nest.submitWaitResult(args);
+
+		if (!result || !result.parsed) {
+			console.log('Error occurred while nest');
+			process.exit();
+		}
+
+		const { tokenId } = result.parsed;
+
+		console.log(
+			`Token ${tokenId} successfully nested`,
+		);
+	}
+
     const isMobile = () => {
 		return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
 	}
@@ -167,9 +296,15 @@ const DataContextProvider = (props) => {
 
 	const fn = {
 		isMobile,
+		initAccountWithWallet,
 		switchWalletAccount,
+		createRftCollection,
 		createCollection,
-		mintNewBundle
+		mintRefungibleToken,
+		mintNewBundle,
+		getTokenInfo,
+		getTokenDetailInfo,
+		nestTokens
 	}
 
 	return (

@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import { fallbackNoImage } from "../utils";
 
 const CollectionCard = ({
     data: {
@@ -13,6 +14,9 @@ const CollectionCard = ({
     if (!collection_id) return <div className="hidden"></div>;
 
     const linkTo = `/visual/${collection_id}`;
+
+    const image = collection_cover ? `https://ipfs.unique.network/ipfs/${collection_cover}` : fallbackNoImage;
+
     return (
         <div className="w-full sm:w-1/2 md:w-1/2 xl:w-1/4 p-4">
             <Link to={linkTo}>
@@ -20,7 +24,7 @@ const CollectionCard = ({
                     <div className="relative pb-48 overflow-hidden">
                         <img
                             className="absolute inset-0 h-full w-full object-contain"
-                            src={`https://ipfs.unique.network/ipfs/${collection_cover}`}
+                            src={image}
                             alt=""
                         />
                     </div>

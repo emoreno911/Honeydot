@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import { fallbackNoImage } from "../utils";
 
 const TokenCard = ({
     data: {
@@ -13,9 +14,8 @@ const TokenCard = ({
 }) => {
     if (!collection_id) return <div className="hidden"></div>;
 
-    const linkTo = `/visual/${token_id}`;
-
-    const fallback = "https://wallet.unique.network/static/media/empty-image.06dd29a7fc6c895e8369e8f0bb5780b2.svg"
+    const _type = children_count > 0 ? "bundle" : "token";
+    const linkTo = `/detail/${_type}/${collection_id}_${token_id}`;
 
     return (
         <div className="w-full sm:w-1/2 md:w-1/3 xl:w-1/4 p-4">
@@ -25,7 +25,7 @@ const TokenCard = ({
                     <div className="relative pb-48 overflow-hidden">
                         <img
                             className="absolute inset-0 h-full w-full object-contain"
-                            src={image.fullUrl || fallback}
+                            src={image.fullUrl || fallbackNoImage}
                             alt=""
                         />
                     </div>

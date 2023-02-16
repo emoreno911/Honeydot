@@ -17,10 +17,10 @@ const Button = ({ children, onClick, color = 'pink' }) => (
 function Playground() {
     const {
         data: { accounts, currentAccountIndex },
-        fn: { mintNewBundle, createCollection },
+        fn: { mintNewBundle, createRftCollection, mintRefungibleToken, getTokenInfo, nestTokens },
     } = useDatacontext();
 
-    const [collectionId, setCollectionId] = useState(500); //useState(486);
+    const [collectionId, setCollectionId] = useState(500) //useState(500); //useState(486);
 
     const mintNewLoyaltyBundle = () => {
         console.log("minting...", accounts[currentAccountIndex]);
@@ -31,7 +31,17 @@ function Playground() {
     }
 
     const mintNewRFT = () => {
-        //createCollection()
+        console.log('minting...')
+        mintRefungibleToken()
+    }
+
+    const handleNesting = () => {
+        nestTokens({ 
+            parentCollection: 500, 
+            parentToken: 2, 
+            childCollection: 523, 
+            childToken: 1 
+        })
     }
 
     return (
@@ -55,7 +65,13 @@ function Playground() {
                 <div className="pt-0">
                     <Button onClick={mintNewLoyaltyBundle}>New Loyalty Bundle</Button>
                     {" "}
-                    <Button onClick={mintNewRFT}>New Collection</Button>
+                    <Button color="blue" onClick={() => createRftCollection()}>New RFT Collection</Button>
+                    {" "}
+                    <Button color="blue" onClick={mintNewRFT}>New RFT Token</Button>
+                    {" "}
+                    <Button color="yellow" onClick={() => handleNesting()}>Nest Tokens</Button>
+                    {" "}
+                    <Button color="yellow" onClick={() => getTokenInfo()}>Get Info</Button>
                     {" "}
                     <ModalAbout />
                 </div>

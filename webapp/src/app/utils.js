@@ -2,6 +2,7 @@ import axios from "axios";
 
 export const ipfsBundleImage = "QmY3XC4Twr62QcMz2StdQZsrrffYKuyimscfM6acA6yCwf";
 export const ipfsTicketImage = "Qmbw957mpvrK6ARp1Uq7taLYRCJaakuaw3p42bAZkPDv9Z";
+export const fallbackNoImage = "https://wallet.unique.network/static/media/empty-image.06dd29a7fc6c895e8369e8f0bb5780b2.svg";
 
 export const appMetadata = {
 	name: "HONEYDOT",
